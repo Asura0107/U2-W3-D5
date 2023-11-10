@@ -29,85 +29,67 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+              <a class="nav-link active" aria-current="page" href="./home.html"
+                >Home</a
               >
-                Dropdown
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" aria-disabled="true">Disabled</a>
             </li>
           </ul>
-          <form class="d-flex" role="search">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
         </div>
       </div>
     </nav>
     <div class="container-md">
       <div class="row justify-content-center">
         <div class="col-md-8">
-          <h2>Inserisci i dati del dispositivo che vuoi mettere in vendita</h2>
-          <form onsubmit="send(e)">
-            <div>
+          <h2 class="my-3">
+            Inserisci i dati del dispositivo che vuoi mettere in vendita
+          </h2>
+          <form onsubmit="send(event)">
+            <div class="mb-3">
               <label for="name">Nome Dispositivo</label>
               <input
                 type="text"
                 id="name"
+                class="form-control"
                 placeholder="Inserisci il nome del dispositvo"
                 required
               />
             </div>
-            <div>
+            <div class="mb-3">
+              <label for="image">Immagine Dispositivo</label>
+              <input
+                type="link"
+                id="image"
+                class="form-control"
+                placeholder="URL"
+                required
+              />
+            </div>
+            <div class="mb-3">
               <label for="description">Descrizione</label>
               <input
                 type="text"
                 id="description"
+                class="form-control"
                 placeholder="Inserisci una descrizione"
                 required
               />
             </div>
-            <div>
+            <div class="mb-3">
               <label for="brand">Brand Dispositivo</label>
               <input
                 type="text"
                 id="brand"
+                class="form-control"
                 placeholder="Inserisci il brand del dispositvo"
                 required
               />
             </div>
-            <div>
+            <div class="mb-3">
               <label for="price">Prezzo</label>
               <input
                 type="number"
                 id="price"
+                class="form-control"
                 placeholder="Inserisci il prezzo del dispositvo"
                 required
               />
@@ -125,13 +107,14 @@
     <script>
       const URL = "https://striveschool-api.herokuapp.com/api/product";
 
-      const send = function (e) {
-        e.preventDefault();
+      const send = (event) => {
+        event.preventDefault();
         const phoneobj = {
           name: document.getElementById("name").value,
           description: document.getElementById("description").value,
           brand: document.getElementById("brand").value,
-          price: document.getElementById("price").value
+          price: document.getElementById("price").value,
+          image: document.getElementById("image").value
         };
         fetch(URL, {
           method: "POST",

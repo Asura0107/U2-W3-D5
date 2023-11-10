@@ -74,11 +74,12 @@
           })
           .then((phoneobj) => {
             const container = document.querySelector(".myphone");
-            container.className = "d-flex justify-content-around";
+            container.className = "d-flex justify-content-around mt-5";
             container.innerHTML = `<div><img src="${phoneobj.imageUrl}" /></div>
             <div class="d-flex flex-column"><h2>${phoneobj.name}</h2>
                 <h5>${phoneobj.brand}</h5>
                 <p>${phoneobj.description}</p>
+                <p class="fs-2">${"$" + phoneobj.price}</p>
             </div>`;
           })
           .catch((error) => {
