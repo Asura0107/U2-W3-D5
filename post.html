@@ -55,10 +55,10 @@
               />
             </div>
             <div class="mb-3">
-              <label for="image">Immagine Dispositivo</label>
+              <label for="imageUrl">Immagine Dispositivo</label>
               <input
-                type="link"
-                id="image"
+                type="url"
+                id="imageUrl"
                 class="form-control"
                 placeholder="URL"
                 required
@@ -106,15 +106,18 @@
     ></script>
     <script>
       const URL = "https://striveschool-api.herokuapp.com/api/product";
+      const justone = new URLSearchParams(window.location.search);
+      const id = justone.get("phoneid");
 
       const send = (event) => {
+        console.log("sent");
         event.preventDefault();
         const phoneobj = {
           name: document.getElementById("name").value,
           description: document.getElementById("description").value,
           brand: document.getElementById("brand").value,
           price: document.getElementById("price").value,
-          image: document.getElementById("image").value
+          imageUrl: document.getElementById("imageUrl").value
         };
         fetch(URL, {
           method: "POST",
@@ -128,6 +131,11 @@
           .then((resp) => resp.json())
           .then((currentphone) => {
             console.log(currentphone);
+            // if (id) {
+            //   alert("id: " + currentphone._id + "è stata modificata");
+            // } else {
+            //   alert("creato con successo" + currentphone._id);
+            // }
           });
       };
     </script>
