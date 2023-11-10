@@ -95,6 +95,13 @@
               />
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
+            <button
+              type="button"
+              class="btn btn-danger d-none mydelete"
+              onclick="delatebtn()"
+            >
+              Delate
+            </button>
           </form>
         </div>
       </div>
@@ -142,6 +149,10 @@
           changebtn.innerText = "Edit";
           changebtn.classList.remove("btn-primary");
           changebtn.classList.add("btn-success");
+          const mydelete = document.querySelector(".mydelete");
+          if (mydelete) {
+            mydelete.classList.remove("d-none");
+          }
         }
       };
 
@@ -168,6 +179,25 @@
           .then((currentphone) => {
             console.log(currentphone);
           });
+      };
+
+      const delatebtn = function () {
+        const consent = confirm("sei sicuro?");
+        if (consent) {
+          fetch(URL, {
+            method: "DELETE",
+            headers: {
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTRkZjU0ZTk0YjFkODAwMThkNTYzMjkiLCJpYXQiOjE2OTk2MDc4ODYsImV4cCI6MTcwMDgxNzQ4Nn0.BV43Ku4SNzpZLAE79snfsqsoxl_oGKKSx-_i0FEhuWs",
+              "Content-Type": "application/json"
+            }
+          })
+            .then((resp) => resp.json())
+            .then((nothing) => {
+              alert("Eleminazione avvenuta con successo");
+              window.location.assign("./home.html");
+            });
+        }
       };
       window.addEventListener("DOMContentLoaded", () => {
         change();
