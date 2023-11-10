@@ -81,24 +81,33 @@
 
             phoneobj.forEach((display) => {
               const col = document.createElement("div");
-              col.className = "col-10 col-sm-6 col-md-4  ";
-              col.innerHTML = `<div class="card p-1 mt-1" >
+              col.className = "col-10 col-sm-6 col-md-3 ";
+              col.innerHTML = `<div class="card p-1 mt-1 mb-3" style="max-width: 300px" >
                                 <img src="${
                                   display.imageUrl
                                 }" class="card-img-top" alt=${display.brand} >
-                                   <div class="card-body">
-                                     <h6 class="card-title">${display.name}</h6>
+                                   <div class="card-body" >
+                                     <h6 class="card-title text-truncate">${
+                                       display.name
+                                     }</h6>
                                      <p class="card-text text-truncate">${
                                        display.description
                                      }</p>
                                       <div class="d-flex justify-content-between">
                                           <div class="btn-group">
-                                              <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                   View
-                                              </button>
-                                              <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                   Edit
-                                              </button>
+
+                                                  <a href=".details.html?phoneid=${
+                                                    display._id
+                                                  }"
+                                                   class="btn btn-sm btn-outline-secondary">
+                                                       View
+                                                  </a>
+
+                                              <a>
+                                                  <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                       Edit
+                                                  </button>
+                                              </a>
                                          </div>
                                                <small class="text-muted">${
                                                  "$" + display.price
@@ -110,6 +119,9 @@
             });
           });
       };
+      // const gotodetail = (id) => {
+      //   window.location.assign("./details.html");
+      // };
       window.addEventListener("DOMContentLoaded", () => {
         phone();
       });
