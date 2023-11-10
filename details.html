@@ -53,7 +53,6 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      const URL = "https://striveschool-api.herokuapp.com/api/product";
       const justone = new URLSearchParams(window.location.search);
       const id = justone.get("phoneid");
 
@@ -80,12 +79,13 @@
                 <h5>${phoneobj.brand}</h5>
                 <p>${phoneobj.description}</p>
                 <p class="fs-2">${"$" + phoneobj.price}</p>
+                <a href="./post.html?phoneid=${
+                  phoneobj._id
+                }" class="btn btn-success mt-3" ">Edit</a>
             </div>`;
-          })
-          .catch((error) => {
-            console.error("Error:", error);
           });
       };
+
       window.addEventListener("DOMContentLoaded", () => {
         phone();
       });

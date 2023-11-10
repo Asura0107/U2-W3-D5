@@ -65,6 +65,8 @@
     ></script>
     <script>
       const URL = "https://striveschool-api.herokuapp.com/api/product";
+      const justone = new URLSearchParams(window.location.search);
+      const id = justone.get("phoneid");
       const phone = () => {
         fetch(URL, {
           method: "GET",
@@ -103,11 +105,7 @@
                                                        View
                                                   </a>
 
-                                              <a>
-                                                  <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                       Edit
-                                                  </button>
-                                              </a>
+                                              
                                          </div>
                                                <small class="text-muted">${
                                                  "$" + display.price

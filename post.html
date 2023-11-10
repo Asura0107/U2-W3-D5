@@ -105,9 +105,45 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      const URL = "https://striveschool-api.herokuapp.com/api/product";
       const justone = new URLSearchParams(window.location.search);
       const id = justone.get("phoneid");
+
+      const URL = id
+        ? "https://striveschool-api.herokuapp.com/api/product/" + id
+        : "https://striveschool-api.herokuapp.com/api/product/";
+
+      const method = id ? "PUT" : "POST";
+      console.log(id);
+      const change = () => {
+        if (id) {
+          fetch(URL, {
+            headers: {
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTRkZjU0ZTk0YjFkODAwMThkNTYzMjkiLCJpYXQiOjE2OTk2MDc4ODYsImV4cCI6MTcwMDgxNzQ4Nn0.BV43Ku4SNzpZLAE79snfsqsoxl_oGKKSx-_i0FEhuWs"
+              // "Content-Type": "application/json"
+            }
+          })
+            .then((resp) => resp.json())
+            .then((changeobj) => {
+              // const { name, description, brand, price, imageUrl } = changeobj;
+              // name = document.getElementById("name").value;
+              // description = document.getElementById("description").value;
+              // brand = document.getElementById("brand").value;
+              // price = document.getElementById("price").value;
+              // imageUrl = document.getElementById("imageUrl").value;
+              document.getElementById("name").value = changeobj.name;
+              document.getElementById("description").value =
+                changeobj.description;
+              document.getElementById("brand").value = changeobj.brand;
+              document.getElementById("price").value = changeobj.price;
+              document.getElementById("imageUrl").value = changeobj.imageUrl;
+            });
+          const changebtn = document.querySelector("button[type='submit']");
+          changebtn.innerText = "Edit";
+          changebtn.classList.remove("btn-primary");
+          changebtn.classList.add("btn-success");
+        }
+      };
 
       const send = (event) => {
         console.log("sent");
@@ -120,7 +156,7 @@
           imageUrl: document.getElementById("imageUrl").value
         };
         fetch(URL, {
-          method: "POST",
+          method,
           body: JSON.stringify(phoneobj),
           headers: {
             Authorization:
@@ -131,13 +167,11 @@
           .then((resp) => resp.json())
           .then((currentphone) => {
             console.log(currentphone);
-            // if (id) {
-            //   alert("id: " + currentphone._id + "è stata modificata");
-            // } else {
-            //   alert("creato con successo" + currentphone._id);
-            // }
           });
       };
+      window.addEventListener("DOMContentLoaded", () => {
+        change();
+      });
     </script>
   </body>
 </html>
