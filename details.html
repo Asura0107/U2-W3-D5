@@ -110,10 +110,7 @@
                 <h5>${phoneobj.brand}</h5>
                 <p>${phoneobj.description}</p>
                 <p class="fs-2">${"$" + phoneobj.price}</p>
-                <a href="./post.html?phoneid=${
-                  phoneobj._id
-                }" class="btn btn-success mt-3" ">Edit</a>
-            </div>`;
+                `;
           })
           .catch((err) => console.log(err));
       };

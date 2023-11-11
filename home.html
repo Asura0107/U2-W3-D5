@@ -109,21 +109,27 @@
                                      <p class="card-text text-truncate">${
                                        display.description
                                      }</p>
-                                      <div class="d-flex justify-content-between">
+                                      <div class="d-flex justify-content-between align-items-center">
                                           <div class="btn-group">
 
                                                   <a href="./details.html?phoneid=${
                                                     display._id
                                                   }"
-                                                   class="btn btn-sm btn-outline-secondary">
+                                                   class="btn  btn-info">
                                                        View
                                                   </a>
+                                                  <a href="./post.html?phoneid=${
+                                                    display._id
+                                                  }" class="btn btn-success " ">Edit</a>
+            
 
-                                              
-                                         </div>
-                                               <small class="text-muted">${
-                                                 "$" + display.price
-                                               }</small>
+
+                                                  </div>
+                                                  
+                                                     <small class="text-muted">${
+                                                       "$" + display.price
+                                                     }</small>
+                                                
                                       </div>
                                   </div>
                             </div>`;

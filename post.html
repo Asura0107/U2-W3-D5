@@ -194,20 +194,20 @@
 
           const myreset = document.querySelector(".myreset");
           myreset.classList.remove("d-none");
-          const reset = () => {
-            const phoneobj = {
-              name: document.getElementById("name").value,
-              description: document.getElementById("description").value,
-              brand: document.getElementById("brand").value,
-              price: document.getElementById("price").value,
-              imageUrl: document.getElementById("imageUrl").value
-            };
-            phoneobj.value = "";
-          };
         }
+      };
+      const reset = () => {
+        const conferma = confirm("sei sicuro?");
+
+        document.getElementById("name").value = "";
+        document.getElementById("description").value = "";
+        document.getElementById("brand").value = "";
+        document.getElementById("price").value = "";
+        document.getElementById("imageUrl").value = "";
       };
 
       const send = (event) => {
+        const assens = confirm("sei sicuro?");
         console.log("sent");
         event.preventDefault();
         const phoneobj = {
@@ -226,9 +226,7 @@
             "Content-Type": "application/json"
           }
         })
-          .then((resp) => resp.json())
-          .then((currentphone) => {
-            console.log(currentphone);
+          .then((resp) => {
             if (!resp.ok) {
               if (resp.status === 400) {
                 throw new Error("Bad Request");
@@ -245,6 +243,11 @@
               throw new Error("Generic err");
             }
             return resp.json();
+          })
+          .then((currentphone) => {
+            alert("Operazione avvenuta con successo con successo");
+            window.location.assign("./home.html");
+            console.log(currentphone);
           })
           .catch((error) => console.log(error));
       };
@@ -269,6 +272,9 @@
       };
       window.addEventListener("DOMContentLoaded", () => {
         change();
+        const myspinner = document.querySelector(".myspinner");
+
+        myspinner.innerHTML = "";
       });
     </script>
   </body>
