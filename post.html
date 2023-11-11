@@ -39,9 +39,16 @@
     <div class="container-md">
       <div class="row justify-content-center">
         <div class="col-md-8">
-          <h2 class="my-3">
-            Inserisci i dati del dispositivo che vuoi vendere
-          </h2>
+          <div class="d-flex align-items-center justify-content-between">
+            <h2 class="my-3 myh2">
+              Inserisci i dati del dispositivo che vuoi vendere
+            </h2>
+            <div class="myspinner text-center">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </div>
           <form onsubmit="send(event)">
             <div class="mb-3">
               <label for="name">Nome Dispositivo</label>
@@ -101,6 +108,13 @@
             >
               Delate
             </button>
+            <button
+              type="button"
+              class="btn btn-warning d-none myreset"
+              onclick="reset()"
+            >
+              Reset
+            </button>
           </form>
         </div>
       </div>
@@ -112,7 +126,9 @@
     ></script>
     <script>
       const justone = new URLSearchParams(window.location.search);
+      console.log(justone);
       const id = justone.get("phoneid");
+      console.log(id);
 
       const URL = id
         ? "https://striveschool-api.herokuapp.com/api/product/" + id
@@ -129,7 +145,25 @@
               // "Content-Type": "application/json"
             }
           })
-            .then((resp) => resp.json())
+            .then((resp) => {
+              console.log(resp);
+              if (!resp.ok) {
+                if (resp.status === 400) {
+                  throw new Error("Bad Request");
+                }
+                if (resp.status === 401) {
+                  throw new Error("Unauthorized");
+                }
+                if (resp.status === 403) {
+                  throw new Error("Forbiden");
+                }
+                if (resp.status === 404) {
+                  throw new Error("Not found");
+                }
+                throw new Error("Generic err");
+              }
+              return resp.json();
+            })
             .then((changeobj) => {
               // const { name, description, brand, price, imageUrl } = changeobj;
               // name = document.getElementById("name").value;
@@ -137,21 +171,39 @@
               // brand = document.getElementById("brand").value;
               // price = document.getElementById("price").value;
               // imageUrl = document.getElementById("imageUrl").value;
+              const myspinner = document.querySelector(".myspinner");
+
+              myspinner.innerHTML = "";
               document.getElementById("name").value = changeobj.name;
               document.getElementById("description").value =
                 changeobj.description;
               document.getElementById("brand").value = changeobj.brand;
               document.getElementById("price").value = changeobj.price;
               document.getElementById("imageUrl").value = changeobj.imageUrl;
-            });
+            })
+            .catch((error) => console.log(error));
+          const h2 = document.querySelector(".myh2");
+          h2.innerText = "Modifica/Elimina";
           const changebtn = document.querySelector("button[type='submit']");
           changebtn.innerText = "Edit";
           changebtn.classList.remove("btn-primary");
           changebtn.classList.add("btn-success");
           const mydelete = document.querySelector(".mydelete");
-          if (mydelete) {
-            mydelete.classList.remove("d-none");
-          }
+
+          mydelete.classList.remove("d-none");
+
+          const myreset = document.querySelector(".myreset");
+          myreset.classList.remove("d-none");
+          const reset = () => {
+            const phoneobj = {
+              name: document.getElementById("name").value,
+              description: document.getElementById("description").value,
+              brand: document.getElementById("brand").value,
+              price: document.getElementById("price").value,
+              imageUrl: document.getElementById("imageUrl").value
+            };
+            phoneobj.value = "";
+          };
         }
       };
 
@@ -177,7 +229,24 @@
           .then((resp) => resp.json())
           .then((currentphone) => {
             console.log(currentphone);
-          });
+            if (!resp.ok) {
+              if (resp.status === 400) {
+                throw new Error("Bad Request");
+              }
+              if (resp.status === 401) {
+                throw new Error("Unauthorized");
+              }
+              if (resp.status === 403) {
+                throw new Error("Forbiden");
+              }
+              if (resp.status === 404) {
+                throw new Error("Not found");
+              }
+              throw new Error("Generic err");
+            }
+            return resp.json();
+          })
+          .catch((error) => console.log(error));
       };
 
       const delatebtn = function () {

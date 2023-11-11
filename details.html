@@ -10,6 +10,16 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+    <style>
+      img {
+        width: 400px;
+      }
+      @media screen and (max-width: 576px) {
+        img {
+          display: none;
+        }
+      }
+    </style>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -41,6 +51,11 @@
     </nav>
     <div class="container-fluid">
       <div class="myrow row">
+        <div class="myspinner text-center">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
         <div class="col-10 mycol">
           <div class="myphone"></div>
         </div>
@@ -66,15 +81,32 @@
         })
           .then((resp) => {
             if (!resp.ok) {
-              throw new Error(`HTTP error! Status: ${resp.status}`);
+              if (resp.status === 400) {
+                throw new Error("Bad Request");
+              }
+              if (resp.status === 401) {
+                throw new Error("Unauthorized");
+              }
+              if (resp.status === 403) {
+                throw new Error("Forbiden");
+              }
+              if (resp.status === 404) {
+                throw new Error("Not found");
+              }
+              throw new Error("Generic err");
             }
             return resp.json();
           })
           .then((phoneobj) => {
+            const myspinner = document.querySelector(".myspinner");
+
+            myspinner.innerHTML = "";
             const container = document.querySelector(".myphone");
             container.className = "d-flex justify-content-around mt-5";
             container.innerHTML = `<div><img src="${phoneobj.imageUrl}" /></div>
-            <div class="d-flex flex-column"><h2>${phoneobj.name}</h2>
+            <div class="d-flex flex-column" style="width: 300px"><h2>${
+              phoneobj.name
+            }</h2>
                 <h5>${phoneobj.brand}</h5>
                 <p>${phoneobj.description}</p>
                 <p class="fs-2">${"$" + phoneobj.price}</p>
@@ -82,7 +114,8 @@
                   phoneobj._id
                 }" class="btn btn-success mt-3" ">Edit</a>
             </div>`;
-          });
+          })
+          .catch((err) => console.log(err));
       };
 
       window.addEventListener("DOMContentLoaded", () => {
