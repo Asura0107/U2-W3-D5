@@ -165,12 +165,6 @@
               return resp.json();
             })
             .then((changeobj) => {
-              // const { name, description, brand, price, imageUrl } = changeobj;
-              // name = document.getElementById("name").value;
-              // description = document.getElementById("description").value;
-              // brand = document.getElementById("brand").value;
-              // price = document.getElementById("price").value;
-              // imageUrl = document.getElementById("imageUrl").value;
               const myspinner = document.querySelector(".myspinner");
 
               myspinner.innerHTML = "";
@@ -198,12 +192,13 @@
       };
       const reset = () => {
         const conferma = confirm("sei sicuro?");
-
-        document.getElementById("name").value = "";
-        document.getElementById("description").value = "";
-        document.getElementById("brand").value = "";
-        document.getElementById("price").value = "";
-        document.getElementById("imageUrl").value = "";
+        if (conferma) {
+          document.getElementById("name").value = "";
+          document.getElementById("description").value = "";
+          document.getElementById("brand").value = "";
+          document.getElementById("price").value = "";
+          document.getElementById("imageUrl").value = "";
+        }
       };
 
       const send = (event) => {
@@ -217,39 +212,41 @@
           price: document.getElementById("price").value,
           imageUrl: document.getElementById("imageUrl").value
         };
-        fetch(URL, {
-          method,
-          body: JSON.stringify(phoneobj),
-          headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTRkZjU0ZTk0YjFkODAwMThkNTYzMjkiLCJpYXQiOjE2OTk2MDc4ODYsImV4cCI6MTcwMDgxNzQ4Nn0.BV43Ku4SNzpZLAE79snfsqsoxl_oGKKSx-_i0FEhuWs",
-            "Content-Type": "application/json"
-          }
-        })
-          .then((resp) => {
-            if (!resp.ok) {
-              if (resp.status === 400) {
-                throw new Error("Bad Request");
-              }
-              if (resp.status === 401) {
-                throw new Error("Unauthorized");
-              }
-              if (resp.status === 403) {
-                throw new Error("Forbiden");
-              }
-              if (resp.status === 404) {
-                throw new Error("Not found");
-              }
-              throw new Error("Generic err");
+        if (assens) {
+          fetch(URL, {
+            method,
+            body: JSON.stringify(phoneobj),
+            headers: {
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTRkZjU0ZTk0YjFkODAwMThkNTYzMjkiLCJpYXQiOjE2OTk2MDc4ODYsImV4cCI6MTcwMDgxNzQ4Nn0.BV43Ku4SNzpZLAE79snfsqsoxl_oGKKSx-_i0FEhuWs",
+              "Content-Type": "application/json"
             }
-            return resp.json();
           })
-          .then((currentphone) => {
-            alert("Operazione avvenuta con successo con successo");
-            window.location.assign("./home.html");
-            console.log(currentphone);
-          })
-          .catch((error) => console.log(error));
+            .then((resp) => {
+              if (!resp.ok) {
+                if (resp.status === 400) {
+                  throw new Error("Bad Request");
+                }
+                if (resp.status === 401) {
+                  throw new Error("Unauthorized");
+                }
+                if (resp.status === 403) {
+                  throw new Error("Forbiden");
+                }
+                if (resp.status === 404) {
+                  throw new Error("Not found");
+                }
+                throw new Error("Generic err");
+              }
+              return resp.json();
+            })
+            .then((currentphone) => {
+              alert("Operazione avvenuta con successo con successo");
+              window.location.assign("./home.html");
+              console.log(currentphone);
+            })
+            .catch((error) => console.log(error));
+        }
       };
 
       const delatebtn = function () {
